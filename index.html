@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soil Type Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --clay:  #BF7A62;
+    --silt:  #C49E72;
+    --sand:  #DBC8A2;
+    --water: #B1DAE0;
+    --accent:#00AEEF;
+    --ink:   #2c2722;
+    --muted: #6f655c;
+    --bg:    #faf7f1;
+    --card:  #ffffff;
+    --line:  rgba(0,0,0,.10);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Montserrat", -apple-system, system-ui, sans-serif;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; }
+
+  .display {
+    font-family: "Avenir Next Condensed", "Montserrat", sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: .2px;
+  }
+
+  /* Hero */
+  header { padding: 56px 0 36px; }
+  .hero { display: flex; gap: 36px; align-items: center; flex-wrap: wrap; }
+  .hero-text { flex: 1 1 320px; }
+  .wordmark { line-height: .92; }
+  .wordmark .l1 { font-size: 52px; display: block; }
+  .wordmark .l2 {
+    font-family: "Montserrat", sans-serif; font-style: normal; font-weight: 600;
+    letter-spacing: 7px; font-size: 17px; display: block; margin-top: 4px; color: var(--muted);
+  }
+  .tagline { font-size: 19px; margin: 18px 0 10px; }
+  .lede { color: var(--muted); margin: 0 0 22px; }
+  .badge {
+    display: inline-block; background: var(--ink); color: #fff; text-decoration: none;
+    padding: 11px 20px; border-radius: 999px; font-weight: 600; font-size: 15px;
+  }
+  .note { font-size: 13px; color: var(--muted); margin-top: 12px; }
+
+  /* Jar motif */
+  .jar { flex: 0 0 188px; }
+  .jar-lid { height: 12px; width: 120px; margin: 0 auto; background: #cfc6ba; border-radius: 6px 6px 2px 2px; }
+  .jar-body {
+    border: 3px solid rgba(0,0,0,.18); border-top: none;
+    border-radius: 8px 8px 16px 16px; overflow: hidden; background: #fff;
+  }
+  .layer { display: flex; align-items: center; justify-content: center; color: #fff;
+           font-weight: 700; font-size: 14px; text-shadow: 0 1px 1px rgba(0,0,0,.18); }
+  .layer.water { height: 52px; background: var(--water); color: #4a6b70; text-shadow: none; }
+  .layer.clay  { height: 60px; background: var(--clay); }
+  .layer.silt  { height: 66px; background: var(--silt); }
+  .layer.sand  { height: 74px; background: var(--sand); color: #6b5e3f; text-shadow: none; }
+
+  /* Sections */
+  section { padding: 30px 0; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    padding: 28px 26px; margin-bottom: 22px;
+  }
+  h2.display { font-size: 30px; margin: 0 0 4px; color: var(--clay); }
+  .sub { color: var(--muted); margin: 0 0 18px; font-size: 14px; }
+
+  .need { font-size: 14px; color: var(--muted); margin: 0 0 18px; }
+  .need b { color: var(--ink); }
+
+  /* Steps */
+  .steps { display: grid; gap: 14px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .num {
+    flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--clay); color: #fff;
+    font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+  .step p { margin: 3px 0 0; }
+
+  .method { display: flex; align-items: center; gap: 12px; margin: 22px 0 12px; }
+  .method:first-child { margin-top: 4px; }
+  .method span { font-weight: 700; white-space: nowrap; }
+  .method .rule { flex: 1; height: 1px; background: var(--line); }
+  .closing { margin-top: 16px; color: var(--muted); font-size: 14px; }
+
+  /* Triangle */
+  .triangle-wrap { text-align: center; margin-bottom: 8px; }
+  svg.triangle { width: 100%; max-width: 380px; height: auto; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  th, td { text-align: left; padding: 10px 8px; vertical-align: top; border-bottom: 1px solid var(--line); }
+  th { font-size: 12px; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+  td.type { font-weight: 700; white-space: nowrap; width: 130px; }
+  td.desc { color: var(--muted); font-size: 14px; }
+
+  footer { padding: 30px 0 60px; color: var(--muted); font-size: 13px; }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 560px) {
+    .wordmark .l1 { font-size: 42px; }
+    .jar { margin: 6px auto 0; }
+    td.type { white-space: normal; width: 110px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="hero">
+        <div class="hero-text">
+          <div class="wordmark display">
+            <span class="l1">Soil Type</span>
+            <span class="l2">ANALYZER</span>
+          </div>
+          <p class="tagline">Know your soil from a jar.</p>
+          <p class="lede">Do a simple jar test, snap a photo, and the level sliders read your soil's sand, silt, and clay, then name your soil type with tips to improve it.</p>
+          <a class="badge" href="#">Download on the App Store</a>
+          <p class="note">Works entirely on your device. No account, no ads, nothing collected.</p>
+        </div>
+        <div class="jar" aria-hidden="true">
+          <div class="jar-lid"></div>
+          <div class="jar-body">
+            <div class="layer water">Water</div>
+            <div class="layer clay">Clay</div>
+            <div class="layer silt">Silt</div>
+            <div class="layer sand">Sand</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="card">
+        <h2 class="display">How to prep</h2>
+        <p class="need">You need: <b>a glass jar with lid, water, and soil.</b></p>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><p>Add soil (remove rocks and debris).</p></div>
+          <div class="step"><div class="num">2</div><p>Add water, more than the soil.</p></div>
+          <div class="step"><div class="num">3</div><p>Close with the lid, shake well.</p></div>
+          <div class="step"><div class="num">4</div><p>Leave it for 24 hours.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="display">How to analyze</h2>
+        <div class="method"><span>Using a photo</span><div class="rule"></div></div>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><p>Take a photo of the prepped jar from the side, at eye level.</p></div>
+          <div class="step"><div class="num">2</div><p>Slide the level bars to set each line.</p></div>
+        </div>
+        <div class="method"><span>Manual input</span><div class="rule"></div></div>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><p>Toggle the top selector to Manual Input.</p></div>
+          <div class="step"><div class="num">2</div><p>Enter each layer's thickness in cm or inch.</p></div>
+        </div>
+        <p class="closing">Either way, your soil type and tips appear under the photo.</p>
+      </div>
+
+      <div class="card">
+        <h2 class="display">Soil types</h2>
+        <p class="sub">The USDA texture triangle, by share of sand, silt, and clay.</p>
+        <div class="triangle-wrap"><svg class="triangle" id="triangle" viewBox="0 0 380 338" role="img" aria-label="USDA soil texture triangle"></svg></div>
+        <table>
+          <thead><tr><th>Type</th><th>Description</th></tr></thead>
+          <tbody id="typeRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      Soil Type Analyzer is made by Snowcha Design LLC.
+      &nbsp;·&nbsp; <a href="https://snowcha.github.io/soil-type-analyzer-support/">Support &amp; privacy</a>
+    </footer>
+
+  </div>
+
+<script>
+  // Texture classes: vertices as [clay, silt] percentages, with label and short description.
+  const CLASSES = [
+    { ab:"S",    name:"Sand",            desc:"Drains very fast, warms early, and holds little water or nutrients.", v:[[10,0],[0,15],[0,0]] },
+    { ab:"LS",   name:"Loamy Sand",      desc:"Fast draining and easy to work, with slightly better holding than pure sand.", v:[[15,0],[0,30],[0,15],[10,0]] },
+    { ab:"SL",   name:"Sandy Loam",      desc:"Well drained and easy to work, with a good balance of holding and aeration.", v:[[20,0],[20,28],[7,41],[7,50],[0,50],[0,30],[15,0]] },
+    { ab:"L",    name:"Loam",            desc:"The ideal balance of drainage, aeration, and water and nutrient holding.", v:[[27,28],[27,50],[7,50],[7,41],[20,28]] },
+    { ab:"SiL",  name:"Silt Loam",       desc:"Fertile and moisture retentive, but can crust and compacts when worked wet.", v:[[27,50],[27,73],[12,88],[12,80],[0,80],[0,50]] },
+    { ab:"Si",   name:"Silt",            desc:"Holds water and nutrients well but compacts and crusts easily.", v:[[12,80],[12,88],[0,100],[0,80]] },
+    { ab:"SCL",  name:"Sandy Clay Loam", desc:"Moderate drainage with decent nutrient holding; firmer than the loams.", v:[[35,0],[35,20],[27,28],[20,28],[20,0]] },
+    { ab:"CL",   name:"Clay Loam",       desc:"Holds water and nutrients well, drains more slowly, and can compact.", v:[[40,15],[40,40],[27,53],[27,28]] },
+    { ab:"SiCL", name:"Silty Clay Loam", desc:"High holding capacity, slow draining, and prone to compaction.", v:[[40,40],[40,60],[27,73],[27,53]] },
+    { ab:"SC",   name:"Sandy Clay",      desc:"Sticky and slow draining despite the sand, with strong nutrient holding.", v:[[55,0],[35,20],[35,0]] },
+    { ab:"SiC",  name:"Silty Clay",      desc:"Heavy, very water retentive, slow to drain, and easily compacted.", v:[[60,40],[40,60],[40,40]] },
+    { ab:"C",    name:"Clay",            desc:"Holds the most water and nutrients but drains slowly and warms late.", v:[[100,0],[60,40],[40,40],[40,15],[55,0]] },
+  ];
+
+  (function drawTriangle(){
+    const W = 380, H = 338, pad = 22, k = Math.sqrt(3)/2;
+    const scale = Math.min(W - 2*pad, (H - 2*pad)/k);
+    const triH = scale*k, ox = (W - scale)/2, oy = (H - triH)/2;
+    const pt = (clay, silt) => [ox + ((silt + 0.5*clay)/100)*scale, oy + triH - (k*clay/100)*scale];
+
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.getElementById("triangle");
+    const poly = (pts, attrs) => {
+      const el = document.createElementNS(NS, "polygon");
+      el.setAttribute("points", pts.map(p => p.join(",")).join(" "));
+      for (const a in attrs) el.setAttribute(a, attrs[a]);
+      svg.appendChild(el);
+    };
+
+    // outer white fill + rounded black border
+    const corners = [pt(0,0), pt(0,100), pt(100,0)];
+    poly(corners, { fill:"#fff", stroke:"none" });
+
+    CLASSES.forEach(c => {
+      const pts = c.v.map(([clay,silt]) => pt(clay,silt));
+      poly(pts, { fill:"none", stroke:"rgba(0,0,0,.28)", "stroke-width":"1" });
+      // label at centroid of vertices
+      const n = c.v.length;
+      const cc = c.v.reduce((s,x)=>s+x[0],0)/n, cs = c.v.reduce((s,x)=>s+x[1],0)/n;
+      const [lx,ly] = pt(cc,cs);
+      const t = document.createElementNS(NS, "text");
+      t.setAttribute("x", lx); t.setAttribute("y", ly+3);
+      t.setAttribute("text-anchor","middle");
+      t.setAttribute("font-size","9"); t.setAttribute("font-family","Montserrat, sans-serif");
+      t.setAttribute("font-weight","600"); t.setAttribute("fill","#6f655c");
+      t.textContent = c.ab;
+      svg.appendChild(t);
+    });
+
+    poly(corners, { fill:"none", stroke:"#2c2722", "stroke-width":"4", "stroke-linejoin":"round" });
+
+    // corner labels
+    const corner = (x,y,txt,anchor) => {
+      const t = document.createElementNS(NS,"text");
+      t.setAttribute("x",x); t.setAttribute("y",y); t.setAttribute("text-anchor",anchor);
+      t.setAttribute("font-size","11"); t.setAttribute("font-family","Montserrat, sans-serif");
+      t.setAttribute("font-weight","700"); t.setAttribute("fill","#2c2722");
+      t.textContent = txt; svg.appendChild(t);
+    };
+    corner(pt(100,0)[0], pt(100,0)[1]-9, "100% clay", "middle");
+    corner(pt(0,0)[0]-2, pt(0,0)[1]+18, "sand", "start");
+    corner(pt(0,100)[0]+2, pt(0,100)[1]+18, "silt", "end");
+  })();
+
+  (function fillTable(){
+    const tb = document.getElementById("typeRows");
+    CLASSES.forEach(c => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = '<td class="type">'+c.name+'</td><td class="desc">'+c.desc+'</td>';
+      tb.appendChild(tr);
+    });
+  })();
+</script>
+</body>
+</html>
