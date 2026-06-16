@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26.69 10.31">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: MontserratRoman-Medium, Montserrat;
+        font-size: 2.99px;
+        font-variation-settings: 'wght' 500;
+        font-weight: 500;
+        letter-spacing: .43em;
+      }
+
+      .cls-2 {
+        font-family: AvenirNextCondensed-BoldItalic, 'Avenir Next Condensed';
+        font-size: 6.97px;
+        font-style: italic;
+        font-weight: 700;
+      }
+
+      .cls-3 {
+        letter-spacing: -.02em;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <text transform="translate(.13 5.95)"><tspan class="cls-2"><tspan x="0" y="0">SOI</tspan><tspan class="cls-3" x="9.42" y="0">L </tspan><tspan x="13.36" y="0">TYPE</tspan></tspan><tspan class="cls-1"><tspan x=".39" y="3.58">ANALYZER</tspan></tspan></text>
+  </g>
+</svg>
